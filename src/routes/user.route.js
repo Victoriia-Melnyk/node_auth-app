@@ -7,22 +7,27 @@ import { catchErrors } from '../utils/catchErrors.js';
 export const userRouter = new express.Router();
 
 userRouter.get('/profile', authMiddleware, catchErrors(userController.getUser));
-userRouter.patch('/profile/name', authMiddleware, userController.updateName);
+
+userRouter.patch(
+  '/profile/name',
+  authMiddleware,
+  catchErrors(userController.updateName),
+);
 
 userRouter.patch(
   '/profile/password',
   authMiddleware,
-  userController.changePassword,
+  catchErrors(userController.changePassword),
 );
 
 userRouter.patch(
   '/profile/email',
   authMiddleware,
-  userController.requestEmailChange,
+  catchErrors(userController.requestEmailChange),
 );
 
 userRouter.get(
   '/profile/change-email/:token',
   authMiddleware,
-  userController.changeEmail,
+  catchErrors(userController.changeEmail),
 );

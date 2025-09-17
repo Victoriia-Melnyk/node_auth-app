@@ -4,7 +4,7 @@ import { userService } from '../services/user.service.js';
 import { jwtService } from '../services/jwt.service.js';
 import { tokenService } from '../services/token.service.js';
 import { emailService } from '../services/email.service.js';
-import { UUIDV4 } from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid';
 
 function validateEmail(value) {
   if (!value) {
@@ -145,7 +145,7 @@ const resetPasswordRequest = async (req, res) => {
   const { email } = req.body;
 
   const user = await userService.findByEmail({ where: { email } });
-  const resetToken = UUIDV4();
+  const resetToken = uuidv4();
 
   if (!user) {
     res.status(401).json({ message: 'User not found' });

@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export function send({ email, subject, html }) {
+function send({ email, subject, html }) {
   return transporter.sendMail({
     to: email,
     subject,
@@ -49,6 +49,7 @@ function sendChangeEmailLink(email, resetEmailToken) {
 }
 
 export const emailService = {
+  send,
   sendActivationEmail,
   sendResetPasswordEmail,
   sendChangeEmailLink,
