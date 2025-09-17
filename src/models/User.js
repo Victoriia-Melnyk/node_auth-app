@@ -22,6 +22,10 @@ export const User = client.define('users', {
     type: DataTypes.STRING,
     defaultValue: null,
   },
+  resetPasswordToken: {
+    type: DataTypes.STRING,
+    defaultValue: null,
+  },
   pendingEmail: {
     type: DataTypes.STRING,
     defaultValue: null,

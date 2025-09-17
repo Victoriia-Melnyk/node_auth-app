@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
-import { client } from '../utils/db';
-import { User } from '../models/User';
+import { client } from '../utils/db.js';
+import { User } from '../models/User.js';
 
 export const Token = client.define('token', {
   refreshToken: { type: DataTypes.STRING, allowNull: false },

@@ -1,6 +1,6 @@
 // import { User } from '../models/User.js';
 import { userService } from '../services/user.service.js';
-import { bcrypt } from 'bcrypt';
+import bcrypt from 'bcrypt';
 
 const getUser = async (req, res) => {
   const user = await userService.getUserById(req.user.id);

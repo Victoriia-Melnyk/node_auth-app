@@ -1,6 +1,6 @@
 import { emailService } from './email.service.js';
 import { v4 as uuidv4 } from 'uuid';
-import { bcrypt } from 'bcrypt';
+import bcrypt from 'bcrypt';
 import { User } from '../models/User.js';
 
 function normalizeUser({ id, name, email }) {
@@ -41,8 +41,8 @@ async function register(email, password, name) {
   await emailService.sendActivationEmail(email, activationToken);
 }
 
-async function emailChange(req, password, newEmail) {
-  const user = await User.findByPk(req.user.id);
+async function emailChange(userId, password, newEmail) {
+  const user = await User.findByPk(userId);
 
   if (!user) {
     const error = new Error('User not found');

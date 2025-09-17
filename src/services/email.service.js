@@ -28,8 +28,8 @@ function sendActivationEmail(email, token) {
   return send({ email, html, subject: 'Activate your account' });
 }
 
-function sendResetPasswordEmail(email, resetToken) {
-  const href = `${process.env.CLIENT_HOST}/reset-password/${resetToken}`;
+function sendResetPasswordEmail(email, resetPasswordToken) {
+  const href = `${process.env.CLIENT_HOST}/reset-password/${resetPasswordToken}`;
   const html = `
   <h1>Confirm password change</h1>
   <a href="${href}">${href}</a>

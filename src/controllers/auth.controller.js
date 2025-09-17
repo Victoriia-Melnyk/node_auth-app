@@ -68,7 +68,7 @@ const activate = async (req, res) => {
 const login = async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await userService.findByEmail({ where: { email } });
+  const user = await userService.findByEmail(email);
 
   if (!user) {
     res.status(401).json({ message: 'User not found' });
@@ -145,16 +145,18 @@ const resetPasswordRequest = async (req, res) => {
   const { email } = req.body;
 
   const user = await userService.findByEmail({ where: { email } });
-  const resetToken = uuidv4();
+  const resetPasswordToken = uuidv4();
 
   if (!user) {
     res.status(401).json({ message: 'User not found' });
+
+    return;
   }
 
-  user.resetPasswordToken = resetToken;
+  user.resetPasswordToken = resetPasswordToken;
   await user.save();
 
-  await emailService.sendResetPasswordEmail(email, resetToken);
+  await emailService.sendResetPasswordEmail(email, resetPasswordToken);
 
   res.send({ message: 'ok' });
 };
@@ -166,13 +168,15 @@ const confirmPasswordChange = async (req, res) => {
 };
 
 const passwordChange = async (req, res) => {
-  const { resetToken, newPassword, newPasswordConfirmation } = req.body;
+  const { resetPasswordToken, newPassword, newPasswordConfirmation } = req.body;
 
   if (newPassword !== newPasswordConfirmation) {
     res.status(401).json({ message: 'Passwords are not equal' });
+
+    return;
   }
 
-  const user = await User.findOne({ where: { resetToken } });
+  const user = await User.findOne({ where: { resetPasswordToken } });
   const hashedPassword = await bcrypt.hash(newPassword, 10);
 
   if (!user) {
